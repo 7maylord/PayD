@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-base-to-string */
 /**
  * Unit Tests for Transaction History API Service
  * 
@@ -277,14 +279,14 @@ describe('fetchAuditRecords', () => {
     
     // Mock fetch to capture the URL
     let capturedUrl = '';
-    global.fetch = async (url: string | URL | Request) => {
-      capturedUrl = url.toString();
-      return new Response(JSON.stringify({
+    global.fetch = (url: string | URL | Request) => {
+      capturedUrl = typeof url === 'string' ? url : url.toString();
+      return Promise.resolve(new Response(JSON.stringify({
         data: [],
         total: 0,
         page: 1,
         totalPages: 0,
-      }), { status: 200 });
+      }), { status: 200 }));
     };
 
     await fetchAuditRecords({
@@ -313,14 +315,14 @@ describe('fetchAuditRecords', () => {
     const { fetchAuditRecords } = await import('../services/transactionHistoryApi');
     
     let capturedUrl = '';
-    global.fetch = async (url: string | URL | Request) => {
-      capturedUrl = url.toString();
-      return new Response(JSON.stringify({
+    global.fetch = (url: string | URL | Request) => {
+      capturedUrl = typeof url === 'string' ? url : url.toString();
+      return Promise.resolve(new Response(JSON.stringify({
         data: [],
         total: 0,
         page: 1,
         totalPages: 0,
-      }), { status: 200 });
+      }), { status: 200 }));
     };
 
     await fetchAuditRecords({

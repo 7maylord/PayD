@@ -145,12 +145,12 @@ export async function fetchAuditRecords(
 
     if (!response.ok) {
       // Create an error object with response info for categorization
-      const error = new Error(`HTTP ${response.status}`);
-      (error as any).response = { status: response.status };
+      const error = new Error(`HTTP ${response.status}`) as Error & { response?: { status: number } };
+      error.response = { status: response.status };
       throw error;
     }
 
-    const data = await response.json();
+    const data: unknown = await response.json();
     return data as AuditApiResponse;
   } catch (error) {
     // If the request was aborted, rethrow as-is
@@ -160,8 +160,8 @@ export async function fetchAuditRecords(
     
     // Otherwise, categorize and rethrow
     const categorized = categorizeError(error);
-    const enhancedError = new Error(categorized.message);
-    (enhancedError as any).errorState = categorized;
+    const enhancedError = new Error(categorized.message) as Error & { errorState?: ErrorState };
+    enhancedError.errorState = categorized;
     throw enhancedError;
   }
 }
@@ -200,12 +200,12 @@ export async function fetchContractEvents(
 
     if (!response.ok) {
       // Create an error object with response info for categorization
-      const error = new Error(`HTTP ${response.status}`);
-      (error as any).response = { status: response.status };
+      const error = new Error(`HTTP ${response.status}`) as Error & { response?: { status: number } };
+      error.response = { status: response.status };
       throw error;
     }
 
-    const data = await response.json();
+    const data: unknown = await response.json();
     return data as ContractEventsApiResponse;
   } catch (error) {
     // If the request was aborted, rethrow as-is
@@ -215,8 +215,8 @@ export async function fetchContractEvents(
     
     // Otherwise, categorize and rethrow
     const categorized = categorizeError(error);
-    const enhancedError = new Error(categorized.message);
-    (enhancedError as any).errorState = categorized;
+    const enhancedError = new Error(categorized.message) as Error & { errorState?: ErrorState };
+    enhancedError.errorState = categorized;
     throw enhancedError;
   }
 }
@@ -468,8 +468,8 @@ export async function fetchHistoryPage(
     
     // Otherwise, categorize and rethrow
     const categorized = categorizeError(error);
-    const enhancedError = new Error(categorized.message);
-    (enhancedError as any).errorState = categorized;
+    const enhancedError = new Error(categorized.message) as Error & { errorState?: ErrorState };
+    enhancedError.errorState = categorized;
     throw enhancedError;
   }
 }

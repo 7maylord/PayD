@@ -32,6 +32,7 @@ export function useFilterState(): UseFilterStateResult {
   const [searchParams, setSearchParams] = useSearchParams();
   
   // Initialize filters from URL query parameters
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- Only run on mount to initialize from URL
   const initialFilters: HistoryFilters = useMemo(() => ({
     search: searchParams.get('search') || '',
     status: searchParams.get('status') || '',
@@ -39,7 +40,7 @@ export function useFilterState(): UseFilterStateResult {
     asset: searchParams.get('asset') || '',
     startDate: searchParams.get('startDate') || '',
     endDate: searchParams.get('endDate') || '',
-  }), []); // Only run on mount
+  }), []);
   
   // Current filter state (immediate updates)
   const [filters, setFilters] = useState<HistoryFilters>(initialFilters);
