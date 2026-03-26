@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/require-await */
 /**
  * Integration Tests for TransactionHistory Component
  *
@@ -28,7 +27,7 @@ async function waitFor(callback: () => void, options: { timeout?: number } = {})
     try {
       callback();
       return;
-    } catch (error) {
+    } catch {
       await new Promise((resolve) => setTimeout(resolve, 50));
     }
   }

@@ -31,19 +31,18 @@ import type { HistoryFilters, UseFilterStateResult } from '../types/transactionH
 export function useFilterState(): UseFilterStateResult {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Initialize filters from URL query parameters
-  // eslint-disable-next-line react-hooks/exhaustive-deps -- Only run on mount to initialize from URL
-  const initialFilters: HistoryFilters = useMemo(
-    () => ({
+  // Initialize filters from URL query parameters (only on mount)
+  const initialFilters: HistoryFilters = useMemo(() => {
+    return {
       search: searchParams.get('search') || '',
       status: searchParams.get('status') || '',
       employee: searchParams.get('employee') || '',
       asset: searchParams.get('asset') || '',
       startDate: searchParams.get('startDate') || '',
       endDate: searchParams.get('endDate') || '',
-    }),
-    []
-  );
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Current filter state (immediate updates)
   const [filters, setFilters] = useState<HistoryFilters>(initialFilters);
